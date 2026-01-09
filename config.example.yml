@@ -1,0 +1,33 @@
+# Nexus Agent Configuration
+# This file configures the local agent that encrypts and forwards data to Nexus
+
+agent:
+  port: 9000
+  bind: "127.0.0.1"  # Only allow local connections
+
+nexus:
+  server_url: "https://your-nexus-server.com"
+  timeout: 30s
+  retry_attempts: 3
+  retry_delay: 5s
+
+  # OPTION 1: Auto-sync (RECOMMENDED)
+  # Use an agent token from Nexus UI - apps are synced automatically
+  agent_token: "agt_your_token_here"
+  sync_interval: 60s  # How often to sync with server (default: 60s)
+
+# OPTION 2: Static configuration (fallback)
+# Only needed if NOT using agent_token, or as fallback if sync fails
+# apps:
+#   - name: "Example App 1"
+#     app_key: "your_app_key_here"
+#     master_secret: "your_master_secret_here"
+#   
+#   - name: "Example App 2"
+#     app_key: "another_app_key"
+#     master_secret: "another_master_secret"
+
+buffer:
+  enabled: true
+  max_size: 10000      # Maximum queued messages
+  db_path: "./queue.db" # SQLite database file for offline queue

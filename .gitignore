@@ -1,0 +1,20 @@
+# Binary
+nexus-agent
+nexus-agent.exe
+
+# Config with secrets
+config.yml
+
+# SQLite queue database
+*.db
+
+# Build output
+dist/
+
+# IDE
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
