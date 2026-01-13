@@ -1,0 +1,27 @@
+# Nexus Agent - Docker Compose for Customers
+# Copy this file to your server and configure config.yml
+
+version: '3.8'
+
+services:
+  nexus-agent:
+    image: ghcr.io/YOUR_ORG/nexus-agent:latest
+    container_name: nexus-agent
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./config.yml:/etc/nexus-agent/config.yml:ro
+      - nexus-agent-data:/var/lib/nexus
+    environment:
+      - TZ=Asia/Jakarta
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  nexus-agent-data:
+    driver: local
